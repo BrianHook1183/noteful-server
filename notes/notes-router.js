@@ -25,4 +25,57 @@ notesRouter
       .catch(next);
   });
 
+notesRouter
+  .route('/:note_id')
+  .all((req, res, next) => {
+    NotesService.getById(
+      req.app.get('db'),
+      req.params.note_id
+    )
+      .then(note => {
+        if (!note) {
+          return res.status(404).json({
+            error: { message: `Note doesn't exist` }
+          });
+        };
+        res.note = note;
+        next();
+      })
+      .catch(next);
+  })
+  .get((req, res, next) => {
+    res.json(serializeNote(res.note));
+  })
+  .delete((req, res, next) => {
+    NotesService.deleteNote(
+      req.app.get('db'),
+      req.params.note_id
+    )
+      .then(() => {
+        res.status(204).end();
+      })
+      .catch(next);
+  })
+  .patch(jsonParser, (req, res, next) => {
+    const { name, modified, content, folder_id } = req.body;
+    const noteToUpdate = { name, modified, content, folder_id };
+
+    const numberOfValues = Object.values(noteToUpdate).filter(Boolean).length;
+    if (numberOfValues === 0) {
+      return res.status(404).json({
+        error: { message: `Request body must contain either 'name', 'modified', 'content' or 'folder_id'` }
+      });
+    };
+
+    NotesService.updateFolder(
+      req.app.get('db'),
+      req.params.note_id,
+      noteToUpdate
+    )
+      .then(() => {
+        res.status(204).end();
+      })
+      .catch(next);
+  });
+
 module.exports = notesRouter;
