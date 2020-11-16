@@ -58,9 +58,9 @@ notesRouter
   })
   .patch(jsonParser, (req, res, next) => {
     const { name, modified, content, folder_id } = req.body;
-    const noteToUpdate = { name, modified, content, folder_id };
+    const updatedNote = { name, modified, content, folder_id };
 
-    const numberOfValues = Object.values(noteToUpdate).filter(Boolean).length;
+    const numberOfValues = Object.values(updatedNote).filter(Boolean).length;
     if (numberOfValues === 0) {
       return res.status(404).json({
         error: { message: `Request body must contain either 'name', 'modified', 'content' or 'folder_id'` }
@@ -70,7 +70,7 @@ notesRouter
     NotesService.updateFolder(
       req.app.get('db'),
       req.params.note_id,
-      noteToUpdate
+      npdatedNote
     )
       .then(() => {
         res.status(204).end();

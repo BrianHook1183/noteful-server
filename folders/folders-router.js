@@ -79,9 +79,9 @@ foldersRouter
   })
   .patch(jsonParser, (req, res, next) => {
     const { name } = req.body;
-    const folderToUpdate = { name };
+    const updatedFolder = { name };
 
-    const numberOfValues = Object.values(folderToUpdate).filter(Boolean).length;
+    const numberOfValues = Object.values(updatedFolder).filter(Boolean).length;
     if (numberOfValues === 0) {
       return res.status(400).json({
         error: {
@@ -93,7 +93,7 @@ foldersRouter
     FoldersService.updateFolder(
       req.app.get('db'),
       req.params.folder_id,
-      folderToUpdate
+      updatedFolder
     )
       .then(() => {
         res.status(204).end();
