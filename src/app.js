@@ -5,6 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const FoldersService = require('../folders/folders-service');
+const NotesService = require('../notes/notes-service');
 
 const app = express();
 
@@ -20,6 +21,14 @@ app.get('/api/folders', (req, res, next) => {
   FoldersService.getAllFolders(req.app.get('db'))
     .then(folders => {
       res.json(folders);
+    })
+    .catch(next)
+});
+
+app.get('/api/notes', (req, res, next) => {
+  NotesService.getAllNotes(req.app.get('db'))
+    .then(notes => {
+      res.json(notes);
     })
     .catch(next)
 });
