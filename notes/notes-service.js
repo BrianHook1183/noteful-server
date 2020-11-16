@@ -26,7 +26,7 @@ const NotesService = {
   updateFolder(knex, id, updatedNote) {
     return knex('notes')
       .where({ id })
-      .update(newNoteFields);
+      .update(updatedNote);
   }
 };
 
