@@ -1,3 +1,5 @@
+TRUNCATE notes RESTART IDENTITY CASCADE;
+
 insert into notes (name, modified, folder_id, content)
 values
   ('Dogs', '2019-01-03T00:00:00.000Z', 1, 'Corporis accusamus placeat quas non voluptas'),

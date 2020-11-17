@@ -7,11 +7,12 @@ const notesRouter = express.Router();
 const jsonParser = express.json();
 
 const serializeNote = note => ({
-  id: note.id,
+  id: note.id.toString(),
   name: xss(note.name),
   modified: note.modified,
   content: xss(note.content),
-  folder_id: note.folder_id
+  // client expects string - propType
+  folderId: note.folder_id.toString()
 });
 
 notesRouter
