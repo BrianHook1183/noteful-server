@@ -1,6 +1,6 @@
 # Noteful Server
 
-This is an Express server for my [Noteful React client](https://github.com/BrianHook1183/noteful) 
+This is a Node / PostgreSQL / Express server for my [Noteful React client](https://github.com/BrianHook1183/noteful) 
 
 ## Set up
 
